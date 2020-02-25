@@ -25,11 +25,6 @@ import Url exposing (fromString)
 
 
 var __Debugger_element;
-window.elm_performance = window.elm_performance || {
-	view: [],
-	vdom_diff: [],
-	vdom_patch: []
-};
 
 var _Browser_element = __Debugger_element || F4(function(impl, flagDecoder, debugMetadata, args)
 {
@@ -55,17 +50,17 @@ var _Browser_element = __Debugger_element || F4(function(impl, flagDecoder, debu
 				startTime = performance.now();
 				var nextNode = view(model);
 				duration = performance.now() - startTime;
-				window.elm_performance.view.push(duration)
+        document.dispatchEvent(new CustomEvent('elm-view', { detail: duration }))
 
 				startTime = performance.now();
 				var patches = __VirtualDom_diff(currNode, nextNode);
 				duration = performance.now() - startTime;
-				window.elm_performance.vdom_diff.push(duration)
+        document.dispatchEvent(new CustomEvent('elm-vdom-diff', { detail: duration }))
 
 				startTime = performance.now();
 				domNode = __VirtualDom_applyPatches(domNode, currNode, patches, sendToApp);
 				duration = performance.now() - startTime;
-				window.elm_performance.vdom_patch.push(duration)
+        document.dispatchEvent(new CustomEvent('elm-vdom-patch', { detail: duration }))
 				currNode = nextNode;
 			});
 		}
@@ -100,19 +95,19 @@ var _Browser_document = __Debugger_document || F4(function(impl, flagDecoder, de
 				startTime = performance.now();
 				var doc = view(model);
 				duration = performance.now() - startTime;
-				window.elm_performance.view.push(duration)
+        document.dispatchEvent(new CustomEvent('elm-view', { detail: duration }))
 
 				var nextNode = __VirtualDom_node('body')(__List_Nil)(doc.__$body);
 
 				startTime = performance.now();
 				var patches = __VirtualDom_diff(currNode, nextNode);
 				duration = performance.now() - startTime;
-				window.elm_performance.vdom_diff.push(duration)
+        document.dispatchEvent(new CustomEvent('elm-vdom-diff', { detail: duration }))
 
 				startTime = performance.now();
 				bodyNode = __VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				duration = performance.now() - startTime;
-				window.elm_performance.vdom_patch.push(duration)
+        document.dispatchEvent(new CustomEvent('elm-vdom-patch', { detail: duration }))
 
 				currNode = nextNode;
 				__VirtualDom_divertHrefToApp = 0;
